@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Jogo Face Mi — Braga ao Porto</title>
+<style>
+  :root{
+    --bg:#f6f8fb;
+    --board:#ffffff;
+    --tile:#e9eef6;
+    --accent:#b56cff;
+    --text:#0b1220;
+    --muted:#556077;
+  }
+  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#eef6ff,#f6f6fb);color:var(--text);display:flex;align-items:center;justify-content:center;padding:22px;box-sizing:border-box;}
+  .wrap{max-width:1000px;width:100%;background:var(--board);border-radius:12px;padding:18px;box-shadow:0 8px 30px rgba(11,18,32,0.08)}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  header img{width:56px;height:56px;border-radius:8px;object-fit:cover}
+  h1{font-size:18px;margin:0}
+  p.sub{margin:6px 0 12px;color:var(--muted);font-size:13px}
+  .main{display:flex;gap:18px;flex-wrap:wrap}
+  .board-wrap{flex:1;min-width:320px}
+  svg{width:100%;height:auto;display:block;border-radius:8px;background:linear-gradient(180deg,#ffffff,#fbfdff);box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}
+  .controls{width:260px}
+  .panel{background:linear-gradient(180deg,#fbfcff,#f4f7ff);padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.04)}
+  .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;border:none;cursor:pointer;font-size:14px;margin-right:8px}
+  .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(181,108,255,0.12)}
+  .small{font-size:13px;color:var(--muted)}
+  .landmark{display:flex;gap:8px;align-items:center;padding:8px;border-radius:8px;background:linear-gradient(180deg,#fff,#fbfbff);border:1px solid rgba(11,18,32,0.03);margin-bottom:8px}
+  .landmark .icon{font-size:22px}
+  footer{margin-top:12px;font-size:13px;color:var(--muted)}
+  @media (max-width:860px){
+    .main{flex-direction:column}
+    .controls{width:100%}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap" role="application" aria-label="Jogo Face Mi Braga para Porto">
+    <header>
+      <img src="https://via.placeholder.com/120x120.png?text=Face+Mi" alt="Logo Face Mi">
+      <div>
+        <h1>Viagem Face Mi — Braga → Porto</h1>
+        <p class="sub">Comece na clínica em Braga e descubra o caminho até a nova clínica no Porto. Role o dado ou avance com as setas.</p>
+      </div>
+    </header>
+
+    <div class="main">
+      <div class="board-wrap">
+        <!-- SVG board — o código JavaScript manipula o jogador -->
+        <svg id="board" viewBox="0 0 1000 560" aria-label="Tabuleiro Braga Porto"></svg>
+      </div>
+
+      <div class="controls">
+        <div class="panel" aria-hidden="false">
+          <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div>
+              <div style="font-weight:600">Status do jogo</div>
+              <div class="small" id="statusText">Posição: Início • Jogadas: 0 • Tempo: 0s</div>
+            </div>
+            <div>
+              <button id="rollBtn" class="btn">Rolar dado</button>
+            </div>
+          </div>
+
+          <div style="margin-bottom:8px">
+            <button id="resetBtn" class="btn secondary">Reiniciar</button>
+            <button id="autoBtn" class="btn secondary">Mover com setas</button>
+          </div>
+
+          <div style="margin-top:8px">
+            <div style="font-weight:600;margin-bottom:6px">Pontos no caminho</div>
+
+            <div class="landmark"><div class="icon">⛪</div><div><div style="font-weight:600">Sé de Braga</div><div class="small">Centro histórico de Braga — perto da clínica inicial.</div></div></div>
+            <div class="landmark"><div class="icon">🏟️</div><div><div style="font-weight:600">Estádio Municipal de Braga</div><div class="small">Obra arquitectónica icónica da cidade.</div></div></div>
+            <div class="landmark"><div class="icon">🛣️</div><div><div style="font-weight:600">Autoestrada (A3)</div><div class="small">Trecho que liga Braga ao Porto — representado no tabuleiro.</div></div></div>
+            <div class="landmark"><div class="icon">🎵</div><div><div style="font-weight:600">Casa da Música</div><div class="small">Praça cultural no Porto.</div></div></div>
+            <div class="landmark"><div class="icon">🛍️</div><div><div style="font-weight:600">Mercado do Bom Sucesso</div><div class="small">Mercado gastronómico no Porto, ótimo para uma paragem.</div></div></div>
+            <div class="landmark"><div class="icon">🔄</div><div><div style="font-weight:600">Rotunda da Boavista</div><div class="small">Grande rotunda urbana, ponto de referência no trajeto final.</div></div></div>
+          </div>
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="panel" style="padding:10px">
+          <div style="font-weight:600;margin-bottom:6px">Endereços</div>
+          <div class="small" style="margin-bottom:6px"><strong>Início (Braga):</strong> R. Dr. Carlos Lloyd Braga 17, 4715-319 Braga</div>
+          <div class="small"><strong>Destino (Porto):</strong> R. Dr. Emílio Peres 47, 4050-007 Porto</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Este ficheiro é standalone. Para integrar no site: carregue o ficheiro HTML e coloque um iframe ou link. Se quiser, adapto cores, imagens e textos para a identidade Face Mi.
+    </footer>
+  </div>
+
+<script>
+/*
+  Jogo de tabuleiro simplificado Braga → Porto
+  - Tabuleiro: sequência de casas com alguns pontos (landmarks).
+  - Controles: botão "Rolar dado", setas do teclado para avançar manualmente.
+  - Vitória: mensagem final personalizada.
+*/
+
+const boardSvg = document.getElementById('board');
+const rollBtn = document.getElementById('rollBtn');
+const resetBtn = document.getElementById('resetBtn');
+const statusText = document.getElementById('statusText');
+
+let cells = []; // array de casas
+let playerPos = 0;
+let moves = 0;
+let startTime = Date.now();
+let timer = null;
+let manualMode = false;
+
+// define o percurso com tipos: start, normal, landmark, highway, city, end
+const path = [
+  {type:'start', label:'Face Mi — Braga'},
+  {type:'landmark', label:'Sé de Braga', icon:'⛪'},
+  {type:'normal', label:'Rua'},
+  {type:'landmark', label:'Estádio Municipal de Braga', icon:'🏟️'},
+  {type:'normal', label:'Subida'},
+  {type:'highway', label:'A3 (autoestrada)', icon:'🛣️'},
+  {type:'normal', label:'KM 1'},
+  {type:'normal', label:'KM 2'},
+  {type:'normal', label:'KM 3'},
+  {type:'city', label:'Entrada no Porto'},
+  {type:'landmark', label:'Casa da Música', icon:'🎵'},
+  {type:'normal', label:'Avenida'},
+  {type:'landmark', label:'Mercado do Bom Sucesso', icon:'🛍️'},
+  {type:'normal', label:'Praceta'},
+  {type:'landmark', label:'Rotunda da Boavista', icon:'🔄'},
+  {type:'normal', label:'Rua lateral'},
+  {type:'end', label:'Face Mi — Porto'}
+];
+
+// layout do tabuleiro: desenhamos as células em linhas zig-zag
+function drawBoard(){
+  const W = 1000, H = 560;
+  boardSvg.setAttribute('viewBox', 0 0 ${W} ${H});
+  while(boardSvg.firstChild) boardSvg.removeChild(boardSvg.firstChild);
+  const margin = 28;
+  const cols = 8;
+  const rows = Math.ceil(path.length / cols);
+  const cellW = Math.floor((W - margin*2) / cols);
+  const cellH = Math.floor((H - margin*2) / rows);
+  cells = [];
+  for(let i=0;i<path.length;i++){
+    const r = Math.floor(i / cols);
+    let c = i % cols;
+    // zig-zag every other row
+    if(r % 2 === 1) c = cols - 1 - c;
+    const x = margin + c * cellW;
+    const y = margin + r * cellH;
+    const cell = {
+      x, y, w: cellW-10, h: cellH-10, i, data: path[i]
+    };
+    cells.push(cell);
+    // rect
+    const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x', cell.x);
+    rect.setAttribute('y', cell.y);
+    rect.setAttribute('width', cell.w);
+    rect.setAttribute('height', cell.h);
+    rect.setAttribute('rx', 10);
+    rect.setAttribute('fill', typeToFill(cell.data.type));
+    rect.setAttribute('stroke', 'rgba(11,18,32,0.06)');
+    rect.setAttribute('stroke-width', '1');
+    boardSvg.appendChild(rect);
+    // label (small)
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x', cell.x + 12);
+    txt.setAttribute('y', cell.y + 26);
+    txt.setAttribute('font-size', 13);
+    txt.setAttribute('fill', '#243143');
+    txt.textContent = (cell.data.type === 'start' ? 'Início — Face Mi (Braga)' : cell.data.type === 'end' ? 'Destino — Face Mi (Porto)' : (cell.data.icon ? (cell.data.icon + ' ') : '') + cell.data.label);
+    boardSvg.appendChild(txt);
+    // index small
+    const idx = document.createElementNS('http://www.w3.org/2000/svg','text');
+    idx.setAttribute('x', cell.x + 12);
+    idx.setAttribute('y', cell.y + cell.h - 10);
+    idx.setAttribute('font-size', 11);
+    idx.setAttribute('fill', 'rgba(36,49,67,0.45)');
+    idx.textContent = Casa ${i};
+    boardSvg.appendChild(idx);
+  }
+  // initial player
+  drawPlayer();
+}
+
+function typeToFill(t){
+  if(t === 'start') return '#e8fff7';
+  if(t === 'end') return '#fff6f8';
+  if(t === 'landmark') return '#fffef6';
+  if(t === 'highway') return '#f2f7ff';
+  if(t === 'city') return '#fff7f2';
+  return '#f8fbff';
+}
+
+let playerEl = null;
+function drawPlayer(){
+  if(playerEl) playerEl.remove();
+  const c = cells[playerPos];
+  // group
+  playerEl = document.createElementNS('http://www.w3.org/2000/svg','g');
+  const cx = c.x + c.w - 34;
+  const cy = c.y + 34;
+  const bg = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  bg.setAttribute('cx', cx);
+  bg.setAttribute('cy', cy);
+  bg.setAttribute('r', 18);
+  bg.setAttribute('fill', '#b56cff');
+  playerEl.appendChild(bg);
+  const emoji = document.createElementNS('http://www.w3.org/2000/svg','text');
+  emoji.setAttribute('x', cx - 9);
+  emoji.setAttribute('y', cy + 8);
+  emoji.setAttribute('font-size', 22);
+  emoji.setAttribute('fill', '#fff');
+  emoji.textContent = '🚗';
+  playerEl.appendChild(emoji);
+  boardSvg.appendChild(playerEl);
+  updateStatus();
+}
+
+// roll dado 1..3 para tornar viagem rápida
+function rollDice(){
+  const roll = Math.floor(Math.random()*3) + 1;
+  movePlayer(roll);
+}
+
+// mover jogador n casas (com animação simples)
+function movePlayer(steps){
+  if(playerPos >= path.length -1) return;
+  const target = Math.min(playerPos + steps, path.length-1);
+  let stepCount = 0;
+  const interval = setInterval(()=>{
+    if(playerPos < target){
+      playerPos++;
+      stepCount++;
+      drawPlayer();
+      // se cair em landmark, mostrar tooltip/modal
+      const cell = path[playerPos];
+      if(cell.type === 'landmark'){
+        showToast(${cell.icon ? cell.icon + ' ' : ''}${cell.label});
+      }
+      if(playerPos === target){ clearInterval(interval); afterMove(); }
+    } else {
+      clearInterval(interval);
+      afterMove();
+    }
+  }, 260);
+  moves += steps;
+  if(!timer){ startTime = Date.now(); timer = setInterval(updateTime, 500); }
+}
+
+function afterMove(){
+  // verificar vitória
+  if(playerPos === path.length - 1){
+    finishGame();
+  } else {
+    updateStatus();
+  }
+}
+
+function updateStatus(){
+  const elapsed = Math.round((Date.now() - startTime)/1000);
+  statusText.textContent = Posição: Casa ${playerPos} • Jogadas: ${moves} • Tempo: ${elapsed}s;
+}
+
+function updateTime(){ updateStatus(); }
+
+function resetGame(){
+  playerPos = 0; moves = 0; if(timer) { clearInterval(timer); timer = null; }
+  startTime = Date.now();
+  updateStatus();
+  drawPlayer();
+}
+
+// small toast for landmarks
+let toastEl = null;
+function showToast(msg){
+  if(toastEl) toastEl.remove();
+  toastEl = document.createElement('div');
+  toastEl.style.position = 'fixed';
+  toastEl.style.left = '50%';
+  toastEl.style.transform = 'translateX(-50%)';
+  toastEl.style.bottom = '28px';
+  toastEl.style.padding = '12px 16px';
+  toastEl.style.background = 'rgba(20,20,30,0.92)';
+  toastEl.style.color = 'white';
+  toastEl.style.borderRadius = '10px';
+  toastEl.style.boxShadow = '0 8px 30px rgba(11,18,32,0.2)';
+  toastEl.style.fontFamily = 'Inter, system-ui, Arial';
+  toastEl.style.zIndex = 9999;
+  toastEl.textContent = msg;
+  document.body.appendChild(toastEl);
+  setTimeout(()=>{ if(toastEl){ toastEl.remove(); toastEl = null; } }, 2200);
+}
+
+function finishGame(){
+  if(timer){ clearInterval(timer); timer = null; }
+  const elapsed = Math.round((Date.now() - startTime)/1000);
+  // mensagem final — conforme solicitado
+  setTimeout(()=>{
+    alert("O Instituto Face Mi chegou ao Porto e você foi um dos primeiros a descobrir o caminho. Aguardamos a sua visita (:");
+  }, 80);
+}
+
+// keyboard controls (avançar 1 casa por seta direita, recuar por esquerda)
+window.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowRight'){ if(playerPos < path.length-1){ movePlayer(1); } }
+  if(e.key === 'ArrowLeft'){ if(playerPos > 0){ playerPos--; moves++; drawPlayer(); } }
+});
+
+// taps no SVG para saltar 1 casa (se tocar à frente)
+boardSvg.addEventListener('click', (ev)=>{
+  const pt = boardSvg.createSVGPoint();
+  pt.x = ev.clientX; pt.y = ev.clientY;
+  const svgP = pt.matrixTransform(boardSvg.getScreenCTM().inverse());
+  // encontra célula clicada
+  for(const c of cells){
+    if(svgP.x >= c.x && svgP.x <= c.x + c.w && svgP.y >= c.y && svgP.y <= c.y + c.h){
+      if(c.i === playerPos + 1) movePlayer(1);
+      else if(c.i > playerPos) {
+        // avançar até essa casa (máx 3)
+        const diff = Math.min(3, c.i - playerPos);
+        movePlayer(diff);
+      }
+      break;
+    }
+  }
+});
+
+// botões UI
+rollBtn.addEventListener('click', ()=>{ rollDice(); });
+resetBtn.addEventListener('click', ()=>{ resetGame(); showToast('Jogo reiniciado'); });
+
+// inicializa
+drawBoard();
+resetGame();
+
+</script>
+</body>
+</html>
