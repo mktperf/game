@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!doctype html&gt;</p>
+<p class="p1">&lt;html lang="pt-PT"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="utf-8" /&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
+<p class="p1">&lt;title&gt;Jogo Face Mi — Braga ao Porto&lt;/title&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--bg:#f6f8fb;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--board:#ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--tile:#e9eef6;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--accent:#b56cff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text:#0b1220;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--muted:#556077;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#eef6ff,#f6f6fb);color:var(--text);display:flex;align-items:center;justify-content:center;padding:22px;box-sizing:border-box;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.wrap{max-width:1000px;width:100%;background:var(--board);border-radius:12px;padding:18px;box-shadow:0 8px 30px rgba(11,18,32,0.08)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>header{display:flex;align-items:center;gap:14px;margin-bottom:12px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>header img{width:56px;height:56px;border-radius:8px;object-fit:cover}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h1{font-size:18px;margin:0}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>p.sub{margin:6px 0 12px;color:var(--muted);font-size:13px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.main{display:flex;gap:18px;flex-wrap:wrap}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.board-wrap{flex:1;min-width:320px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>svg{width:100%;height:auto;display:block;border-radius:8px;background:linear-gradient(180deg,#ffffff,#fbfdff);box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.controls{width:260px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel{background:linear-gradient(180deg,#fbfcff,#f4f7ff);padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.04)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;border:none;cursor:pointer;font-size:14px;margin-right:8px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(181,108,255,0.12)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.small{font-size:13px;color:var(--muted)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.landmark{display:flex;gap:8px;align-items:center;padding:8px;border-radius:8px;background:linear-gradient(180deg,#fff,#fbfbff);border:1px solid rgba(11,18,32,0.03);margin-bottom:8px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.landmark .icon{font-size:22px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>footer{margin-top:12px;font-size:13px;color:var(--muted)}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width:860px){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.main{flex-direction:column}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.controls{width:100%}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="wrap" role="application" aria-label="Jogo Face Mi Braga para Porto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;img src="https://via.placeholder.com/120x120.png?text=Face+Mi" alt="Logo Face Mi"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;Viagem Face Mi — Braga → Porto&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="sub"&gt;Comece na clínica em Braga e descubra o caminho até a nova clínica no Porto. Role o dado ou avance com as setas.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="main"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="board-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SVG board — o código JavaScript manipula o jogador --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg id="board" viewBox="0 0 1000 560" aria-label="Tabuleiro Braga Porto"&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="controls"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="panel" aria-hidden="false"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style="font-weight:600"&gt;Status do jogo&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="small" id="statusText"&gt;Posição: Início • Jogadas: 0 • Tempo: 0s&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;button id="rollBtn" class="btn"&gt;Rolar dado&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="margin-bottom:8px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="resetBtn" class="btn secondary"&gt;Reiniciar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="autoBtn" class="btn secondary"&gt;Mover com setas&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="margin-top:8px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-weight:600;margin-bottom:6px"&gt;Pontos no caminho&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="landmark"&gt;&lt;div class="icon"&gt;⛪&lt;/div&gt;&lt;div&gt;&lt;div style="font-weight:600"&gt;Sé de Braga&lt;/div&gt;&lt;div class="small"&gt;Centro histórico de Braga — perto da clínica inicial.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="landmark"&gt;&lt;div class="icon"&gt;🏟️&lt;/div&gt;&lt;div&gt;&lt;div style="font-weight:600"&gt;Estádio Municipal de Braga&lt;/div&gt;&lt;div class="small"&gt;Obra arquitectónica icónica da cidade.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="landmark"&gt;&lt;div class="icon"&gt;🛣️&lt;/div&gt;&lt;div&gt;&lt;div style="font-weight:600"&gt;Autoestrada (A3)&lt;/div&gt;&lt;div class="small"&gt;Trecho que liga Braga ao Porto — representado no tabuleiro.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="landmark"&gt;&lt;div class="icon"&gt;🎵&lt;/div&gt;&lt;div&gt;&lt;div style="font-weight:600"&gt;Casa da Música&lt;/div&gt;&lt;div class="small"&gt;Praça cultural no Porto.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="landmark"&gt;&lt;div class="icon"&gt;🛍️&lt;/div&gt;&lt;div&gt;&lt;div style="font-weight:600"&gt;Mercado do Bom Sucesso&lt;/div&gt;&lt;div class="small"&gt;Mercado gastronómico no Porto, ótimo para uma paragem.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="landmark"&gt;&lt;div class="icon"&gt;🔄&lt;/div&gt;&lt;div&gt;&lt;div style="font-weight:600"&gt;Rotunda da Boavista&lt;/div&gt;&lt;div class="small"&gt;Grande rotunda urbana, ponto de referência no trajeto final.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="height:10px"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="panel" style="padding:10px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="font-weight:600;margin-bottom:6px"&gt;Endereços&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="small" style="margin-bottom:6px"&gt;&lt;strong&gt;Início (Braga):&lt;/strong&gt; R. Dr. Carlos Lloyd Braga 17, 4715-319 Braga&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="small"&gt;&lt;strong&gt;Destino (Porto):&lt;/strong&gt; R. Dr. Emílio Peres 47, 4050-007 Porto&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Este ficheiro é standalone. Para integrar no site: carregue o ficheiro HTML e coloque um iframe ou link. Se quiser, adapto cores, imagens e textos para a identidade Face Mi.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">/*</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Jogo de tabuleiro simplificado Braga → Porto</p>
+<p class="p1"><span class="Apple-converted-space">  </span>- Tabuleiro: sequência de casas com alguns pontos (landmarks).</p>
+<p class="p1"><span class="Apple-converted-space">  </span>- Controles: botão "Rolar dado", setas do teclado para avançar manualmente.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>- Vitória: mensagem final personalizada.</p>
+<p class="p1">*/</p>
+<p class="p2"><br></p>
+<p class="p1">const boardSvg = document.getElementById('board');</p>
+<p class="p1">const rollBtn = document.getElementById('rollBtn');</p>
+<p class="p1">const resetBtn = document.getElementById('resetBtn');</p>
+<p class="p1">const statusText = document.getElementById('statusText');</p>
+<p class="p2"><br></p>
+<p class="p1">let cells = []; // array de casas</p>
+<p class="p1">let playerPos = 0;</p>
+<p class="p1">let moves = 0;</p>
+<p class="p1">let startTime = Date.now();</p>
+<p class="p1">let timer = null;</p>
+<p class="p1">let manualMode = false;</p>
+<p class="p2"><br></p>
+<p class="p1">// define o percurso com tipos: start, normal, landmark, highway, city, end</p>
+<p class="p1">const path = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'start', label:'Face Mi — Braga'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'landmark', label:'Sé de Braga', icon:'⛪'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'Rua'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'landmark', label:'Estádio Municipal de Braga', icon:'🏟️'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'Subida'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'highway', label:'A3 (autoestrada)', icon:'🛣️'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'KM 1'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'KM 2'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'KM 3'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'city', label:'Entrada no Porto'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'landmark', label:'Casa da Música', icon:'🎵'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'Avenida'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'landmark', label:'Mercado do Bom Sucesso', icon:'🛍️'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'Praceta'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'landmark', label:'Rotunda da Boavista', icon:'🔄'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'normal', label:'Rua lateral'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{type:'end', label:'Face Mi — Porto'}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// layout do tabuleiro: desenhamos as células em linhas zig-zag</p>
+<p class="p1">function drawBoard(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const W = 1000, H = 560;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>boardSvg.setAttribute('viewBox', 0 0 ${W} ${H});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>while(boardSvg.firstChild) boardSvg.removeChild(boardSvg.firstChild);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const margin = 28;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cols = 8;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const rows = Math.ceil(path.length / cols);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cellW = Math.floor((W - margin*2) / cols);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cellH = Math.floor((H - margin*2) / rows);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cells = [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for(let i=0;i&lt;path.length;i++){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const r = Math.floor(i / cols);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let c = i % cols;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// zig-zag every other row</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(r % 2 === 1) c = cols - 1 - c;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const x = margin + c * cellW;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const y = margin + r * cellH;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const cell = {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>x, y, w: cellW-10, h: cellH-10, i, data: path[i]</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cells.push(cell);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// rect</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('x', cell.x);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('y', cell.y);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('width', cell.w);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('height', cell.h);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('rx', 10);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('fill', typeToFill(cell.data.type));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('stroke', 'rgba(11,18,32,0.06)');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rect.setAttribute('stroke-width', '1');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>boardSvg.appendChild(rect);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// label (small)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const txt = document.createElementNS('http://www.w3.org/2000/svg','text');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>txt.setAttribute('x', cell.x + 12);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>txt.setAttribute('y', cell.y + 26);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>txt.setAttribute('font-size', 13);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>txt.setAttribute('fill', '#243143');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>txt.textContent = (cell.data.type === 'start' ? 'Início — Face Mi (Braga)' : cell.data.type === 'end' ? 'Destino — Face Mi (Porto)' : (cell.data.icon ? (cell.data.icon + ' ') : '') + cell.data.label);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>boardSvg.appendChild(txt);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// index small</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const idx = document.createElementNS('http://www.w3.org/2000/svg','text');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>idx.setAttribute('x', cell.x + 12);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>idx.setAttribute('y', cell.y + cell.h - 10);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>idx.setAttribute('font-size', 11);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>idx.setAttribute('fill', 'rgba(36,49,67,0.45)');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>idx.textContent = Casa ${i};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>boardSvg.appendChild(idx);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// initial player</p>
+<p class="p1"><span class="Apple-converted-space">  </span>drawPlayer();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function typeToFill(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t === 'start') return '#e8fff7';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t === 'end') return '#fff6f8';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t === 'landmark') return '#fffef6';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t === 'highway') return '#f2f7ff';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t === 'city') return '#fff7f2';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return '#f8fbff';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">let playerEl = null;</p>
+<p class="p1">function drawPlayer(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(playerEl) playerEl.remove();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c = cells[playerPos];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// group</p>
+<p class="p1"><span class="Apple-converted-space">  </span>playerEl = document.createElementNS('http://www.w3.org/2000/svg','g');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cx = c.x + c.w - 34;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cy = c.y + 34;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bg = document.createElementNS('http://www.w3.org/2000/svg','circle');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bg.setAttribute('cx', cx);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bg.setAttribute('cy', cy);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bg.setAttribute('r', 18);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bg.setAttribute('fill', '#b56cff');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>playerEl.appendChild(bg);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const emoji = document.createElementNS('http://www.w3.org/2000/svg','text');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>emoji.setAttribute('x', cx - 9);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>emoji.setAttribute('y', cy + 8);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>emoji.setAttribute('font-size', 22);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>emoji.setAttribute('fill', '#fff');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>emoji.textContent = '🚗';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>playerEl.appendChild(emoji);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>boardSvg.appendChild(playerEl);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateStatus();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// roll dado 1..3 para tornar viagem rápida</p>
+<p class="p1">function rollDice(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const roll = Math.floor(Math.random()*3) + 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>movePlayer(roll);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// mover jogador n casas (com animação simples)</p>
+<p class="p1">function movePlayer(steps){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(playerPos &gt;= path.length -1) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const target = Math.min(playerPos + steps, path.length-1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let stepCount = 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const interval = setInterval(()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(playerPos &lt; target){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>playerPos++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>stepCount++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>drawPlayer();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// se cair em landmark, mostrar tooltip/modal</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const cell = path[playerPos];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(cell.type === 'landmark'){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>showToast(${cell.icon ? cell.icon + ' ' : ''}${cell.label});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(playerPos === target){ clearInterval(interval); afterMove(); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>clearInterval(interval);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>afterMove();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}, 260);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>moves += steps;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!timer){ startTime = Date.now(); timer = setInterval(updateTime, 500); }</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function afterMove(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// verificar vitória</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(playerPos === path.length - 1){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>finishGame();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>updateStatus();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function updateStatus(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const elapsed = Math.round((Date.now() - startTime)/1000);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>statusText.textContent = Posição: Casa ${playerPos} • Jogadas: ${moves} • Tempo: ${elapsed}s;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function updateTime(){ updateStatus(); }</p>
+<p class="p2"><br></p>
+<p class="p1">function resetGame(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>playerPos = 0; moves = 0; if(timer) { clearInterval(timer); timer = null; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>startTime = Date.now();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateStatus();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>drawPlayer();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// small toast for landmarks</p>
+<p class="p1">let toastEl = null;</p>
+<p class="p1">function showToast(msg){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(toastEl) toastEl.remove();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.position = 'fixed';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.left = '50%';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.transform = 'translateX(-50%)';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.bottom = '28px';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.padding = '12px 16px';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.background = 'rgba(20,20,30,0.92)';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.color = 'white';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.borderRadius = '10px';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.boxShadow = '0 8px 30px rgba(11,18,32,0.2)';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.fontFamily = 'Inter, system-ui, Arial';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.style.zIndex = 9999;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastEl.textContent = msg;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.body.appendChild(toastEl);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>setTimeout(()=&gt;{ if(toastEl){ toastEl.remove(); toastEl = null; } }, 2200);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function finishGame(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(timer){ clearInterval(timer); timer = null; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const elapsed = Math.round((Date.now() - startTime)/1000);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// mensagem final — conforme solicitado</p>
+<p class="p1"><span class="Apple-converted-space">  </span>setTimeout(()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>alert("O Instituto Face Mi chegou ao Porto e você foi um dos primeiros a descobrir o caminho. Aguardamos a sua visita (:");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}, 80);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// keyboard controls (avançar 1 casa por seta direita, recuar por esquerda)</p>
+<p class="p1">window.addEventListener('keydown', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(e.key === 'ArrowRight'){ if(playerPos &lt; path.length-1){ movePlayer(1); } }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(e.key === 'ArrowLeft'){ if(playerPos &gt; 0){ playerPos--; moves++; drawPlayer(); } }</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// taps no SVG para saltar 1 casa (se tocar à frente)</p>
+<p class="p1">boardSvg.addEventListener('click', (ev)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const pt = boardSvg.createSVGPoint();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>pt.x = ev.clientX; pt.y = ev.clientY;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const svgP = pt.matrixTransform(boardSvg.getScreenCTM().inverse());</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// encontra célula clicada</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for(const c of cells){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(svgP.x &gt;= c.x &amp;&amp; svgP.x &lt;= c.x + c.w &amp;&amp; svgP.y &gt;= c.y &amp;&amp; svgP.y &lt;= c.y + c.h){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(c.i === playerPos + 1) movePlayer(1);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>else if(c.i &gt; playerPos) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// avançar até essa casa (máx 3)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const diff = Math.min(3, c.i - playerPos);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>movePlayer(diff);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// botões UI</p>
+<p class="p1">rollBtn.addEventListener('click', ()=&gt;{ rollDice(); });</p>
+<p class="p1">resetBtn.addEventListener('click', ()=&gt;{ resetGame(); showToast('Jogo reiniciado'); });</p>
+<p class="p2"><br></p>
+<p class="p1">// inicializa</p>
+<p class="p1">drawBoard();</p>
+<p class="p1">resetGame();</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
