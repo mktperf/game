@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>Face Mi Labirinto Braga → Porto</title>
+<style>
+body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f8f8; }
+#labyrinth {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  grid-gap: 2px;
+  margin: 20px auto;
+  width: 520px;
+  height: 520px;
+  background-color: #eee;
+  border: 2px solid #333;
+}
+.cell {
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.wall { background-color: #444; }
+.player { background-color: #ff6666; width: 30px; height: 30px; border-radius: 50%; }
+.icon { font-size: 10px; text-align:center; }
+button { padding: 10px 20px; margin: 10px; font-size:16px; }
+#message { margin-top: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>Face Mi Labirinto Braga → Porto</h1>
+<p>Use as setas do teclado para chegar ao Porto!</p>
+
+<div id="labyrinth"></div>
+
+<button id="show-map-btn">Mostrar Mapa</button>
+<button id="restart-btn">Reiniciar</button>
+
+<div id="message"></div>
+
+<script>
+// Labirinto: 10x10 (0=caminho, 1=parede)
+const layout = [
+  [0,1,0,0,0,0,1,0,0,0],
+  [0,1,0,1,1,0,1,0,1,0],
+  [0,0,0,1,0,0,0,0,1,0],
+  [1,1,0,1,0,1,1,0,1,0],
+  [0,0,0,0,0,0,0,0,0,0],
+  [0,1,1,1,1,1,1,1,1,0],
+  [0,0,0,0,0,0,0,0,1,0],
+  [0,1,1,1,1,0,1,0,1,0],
+  [0,0,0,0,1,0,0,0,0,0],
+  [0,1,0,0,0,1,1,1,1,0]
+];
+
+// Pontos de interesse
+const icons = {
+  "0-6": "Bonsucesso",
+  "2-4": "Torre",
+  "8-9": "Ribeira"
+};
+
+const labyrinth = document.getElementById('labyrinth');
+let playerPos = {x:0, y:0};
+let cells = [];
+
+// Criar células
+for(let y=0; y<10; y++){
+  for(let x=0; x<10; x++){
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    if(layout[y][x]===1) cell.classList.add('wall');
+    const key = ${y}-${x};
+    if(icons[key]){
+      const span = document.createElement('span');
+      span.className='icon';
+      span.textContent=icons[key];
+      cell.appendChild(span);
+    }
+    labyrinth.appendChild(cell);
+    cells.push({x,y,el:cell});
+  }
+}
+
+// Criar jogador
+const playerEl = document.createElement('div');
+playerEl.className='player';
+
+function drawPlayer(){
+  cells.forEach(c=>{
+    if(c.el.contains(playerEl)) c.el.removeChild(playerEl);
+  });
+  const cell = cells.find(c=>c.x===playerPos.x && c.y===playerPos.y);
+  cell.el.appendChild(playerEl);
+}
+drawPlayer();
+
+// Movimento com setas
+document.addEventListener('keydown',(e)=>{
+  let nx = playerPos.x;
+  let ny = playerPos.y;
+  if(e.key==='ArrowUp') ny--;
+  else if(e.key==='ArrowDown') ny++;
+  else if(e.key==='ArrowLeft') nx--;
+  else if(e.key==='ArrowRight') nx++;
+  if(nx>=0 && nx<10 && ny>=0 && ny<10 && layout[ny][nx]===0){
+    playerPos={x:nx,y:ny};
+    drawPlayer();
+    checkEnd();
+  }
+});
+
+// Verificar final
+function checkEnd(){
+  if(playerPos.x===9 && playerPos.y===9){
+    document.getElementById('message').textContent="O Instituto Face Mi chegou ao Porto e você foi um dos primeiros a descobrir o caminho. Aguardamos a sua visita (:";
+  }
+}
+
+// Botão Mostrar Mapa
+document.getElementById('show-map-btn').addEventListener('click',()=>{
+  window.open('https://maps.app.goo.gl/a71KmkjzLQiyjSgc9?g_st=ipc','_blank');
+});
+
+// Botão Reiniciar
+document.getElementById('restart-btn').addEventListener('click',()=>{
+  playerPos={x:0,y:0};
+  drawPlayer();
+  document.getElementById('message').textContent='';
+});
+</script>
+
+</body>
+</html>
